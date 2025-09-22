@@ -17,6 +17,7 @@ import tech.aurasoftware.candoreco.database.DatabaseManager;
 import tech.aurasoftware.candoreco.economy.AccountManager;
 import tech.aurasoftware.candoreco.economy.CandorEconomy;
 import tech.aurasoftware.candoreco.file.YamlFile;
+import tech.aurasoftware.candoreco.interest.InterestManager;
 import tech.aurasoftware.candoreco.listeners.PlayerListener;
 
 public class CandorEco extends JavaPlugin {
@@ -25,6 +26,7 @@ public class CandorEco extends JavaPlugin {
     private DatabaseManager databaseManager;
     private AccountManager accountManager;
     private CandorEconomy economy;
+    private InterestManager interestManager;
     private boolean vaultEnabled = false;
     
     @Override
@@ -45,12 +47,18 @@ public class CandorEco extends JavaPlugin {
                 // Initialize account manager
                 accountManager = new AccountManager(this, databaseManager);
                 
+                // Initialize interest manager
+                interestManager = new InterestManager(this, accountManager);
+                
                 // Setup Vault integration if available (on main thread)
                 getServer().getScheduler().runTask(this, this::setupVault);
                 
                 // Register listeners with proper accountManager (on main thread)
                 getServer().getScheduler().runTask(this, () -> {
                     getServer().getPluginManager().registerEvents(new PlayerListener(this, accountManager), this);
+                    
+                    // Start interest system after everything is initialized
+                    interestManager.start();
                 });
                 
             } else {
@@ -91,6 +99,11 @@ public class CandorEco extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        // Stop interest system
+        if (interestManager != null) {
+            interestManager.stop();
+        }
+        
         // Save all accounts before shutdown
         if (accountManager != null) {
             accountManager.saveAllAccounts().join(); // Wait for completion
@@ -141,6 +154,14 @@ public class CandorEco extends JavaPlugin {
      */
     public CandorEconomy getEconomy() {
         return economy;
+    }
+    
+    /**
+     * Get the interest manager instance
+     * @return the InterestManager
+     */
+    public InterestManager getInterestManager() {
+        return interestManager;
     }
     
     /**

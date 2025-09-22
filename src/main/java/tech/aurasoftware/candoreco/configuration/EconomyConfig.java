@@ -25,6 +25,11 @@ public enum EconomyConfig implements Configuration {
     EARN_COOLDOWN("economy.earn.cooldown-hours", 24),
     EARN_ENABLED("economy.earn.enabled", true),
     
+    // Interest system configuration
+    INTEREST_ENABLED("economy.interest.enabled", true),
+    INTEREST_RATE("economy.interest.rate", 2.5),
+    INTEREST_INTERVAL_MINUTES("economy.interest.interval-minutes", 20),
+    
     // Message configurations
     PREFIX("messages.prefix", "&6[CandorEco] &f"),
     INSUFFICIENT_FUNDS("messages.insufficient-funds", "{prefix}&cYou don't have enough {currency}!"),
@@ -83,7 +88,11 @@ public enum EconomyConfig implements Configuration {
     FREEZE_NOTIFICATION("messages.freeze.notification", "{prefix}&cYou have been frozen by an administrator!"),
     UNFREEZE_NOTIFICATION("messages.freeze.unfreeze-notification", "{prefix}&aYou have been unfrozen by an administrator!"),
     SENDER_FROZEN("messages.freeze.sender-frozen", "{prefix}&cYou cannot send money while frozen!"),
-    RECEIVER_FROZEN("messages.freeze.receiver-frozen", "{prefix}&cYou cannot send money to a frozen player!");
+    RECEIVER_FROZEN("messages.freeze.receiver-frozen", "{prefix}&cYou cannot send money to a frozen player!"),
+    
+    // Interest system messages
+    INTEREST_EARNED("messages.interest.earned", "{prefix}&aYou earned &6{amount} {currency} &ain interest!"),
+    INTEREST_DISABLED("messages.interest.disabled", "{prefix}&cInterest system is currently disabled!");
 
     private final String path;
     private Object value;

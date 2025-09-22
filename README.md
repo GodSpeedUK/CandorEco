@@ -6,6 +6,7 @@ A comprehensive economy plugin for Minecraft servers with advanced features incl
 
 - 💰 **Complete Economy System** - Balance management with Vault integration
 - ⏰ **Earn Command** - Players can earn money with configurable cooldowns
+- 💹 **Interest System** - Automatic interest payments for online, non-frozen players
 - 🧊 **Freeze System** - Admins can freeze players to restrict economic activities
 - 💸 **Money Transfers** - Secure player-to-player transactions
 - 🗄️ **MySQL Database** - Persistent storage with automatic schema migration
@@ -38,6 +39,11 @@ economy:
   earn:
     amount: 50.0      # Amount players earn per /earn command
     cooldown: 86400   # Cooldown in seconds (24 hours = 86400)
+  
+  interest:
+    enabled: true     # Enable/disable interest system
+    rate: 2.5         # Interest rate percentage
+    interval-minutes: 20  # How often interest is paid (in minutes)
   
   starting_balance: 100.0  # New player starting balance
 
@@ -103,6 +109,13 @@ groups:
 - Configurable cooldown period (default: 24 hours)
 - Cooldown persists across server restarts
 - Shows remaining time when on cooldown
+
+### Interest System
+- Automatic interest payments to online, non-frozen players
+- Configurable interest rate (default: 2.5%)
+- Configurable payment interval (default: 20 minutes)
+- Players receive notifications when interest is paid
+- Interest is calculated and rounded to 2 decimal places
 
 ### Freeze System
 - Admins can freeze players to restrict all economic activities
