@@ -18,7 +18,6 @@ import tech.aurasoftware.candoreco.economy.AccountManager;
 import tech.aurasoftware.candoreco.economy.CandorEconomy;
 import tech.aurasoftware.candoreco.file.YamlFile;
 import tech.aurasoftware.candoreco.listeners.PlayerListener;
-import tech.aurasoftware.candoreco.managers.PluginManager;
 
 public class CandorEco extends JavaPlugin {
     
@@ -61,9 +60,6 @@ public class CandorEco extends JavaPlugin {
             getLogger().log(Level.SEVERE, "Database initialization error", throwable);
             return null;
         });
-        
-        // Initialize managers
-        PluginManager.getInstance().initialize();
         
         // Register commands
         commandRegistry.registerCommands(new EconomyCommands(this));
